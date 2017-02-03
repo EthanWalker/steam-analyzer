@@ -21,6 +21,14 @@ def get_persona_name(username):
    # return the persona name
    return persona_name
 
+def get_avatar(username):
+   # get custom player summary using key and provided user ID
+   player_summary =  requests.get("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={0}&steamids={1}".format( STEAM_API_KEY, username)).json()
+   # drill down into player summary JSON and get persona name
+   avatar = player_summary["response"]["players"][0]["avatarfull"]
+   # return the persona name
+   return avatar
+
 
 def get_friends_list(username):
    # get custom friends list using key and provided user ID

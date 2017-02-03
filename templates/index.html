@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Steam Analyzer</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Hello {{steam_id}}</h1>
+    <div class = "jumbotron text-center">
+        <img src="{{avatar}}" class="img-rounded" width="164" height="164">
+        <h1>Hello {{username}}</h1>
+    </div>
+    <ul>
+        <li>You have {{game_count}} games</li>
+        <li>You have {{friends_count}} friends</li>
+    </ul>
 </body>
 </html>

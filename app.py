@@ -8,7 +8,12 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/<steam_id>')
 def index(steam_id="76561197960435530"):
-    return render_template("index.html", steam_id=steam_id)
+    username = get_persona_name(steam_id)
+    game_count = get_game_list(steam_id)["count"]
+    friends_count = len(get_friends_list(steam_id))
+    avatar = get_avatar(steam_id)
+    context = {'username': username, "game_count": game_count, "friends_count": friends_count, "avatar": avatar}
+    return render_template("index.html", **context)
 
 
 
