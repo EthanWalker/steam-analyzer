@@ -29,6 +29,13 @@ def make_steam_request(steam_url, endpoint, version, payload):
 
 
 def get_persona_name(steam_id):
+    """
+    Get custom player summary using provided steam ID and return
+    the persona name.
+
+    :param steam_id: string steam id
+    :return: string persona name
+    """
 
     # get custom player summary using key and provided user ID
     payload = {
@@ -47,6 +54,13 @@ def get_persona_name(steam_id):
     return persona_name
 
 def get_avatar(steam_id):
+    """
+    Get custom player summary using provided steam ID and return
+    the avatar.
+
+    :param steam_id: string steam id
+    :return: string link to avatar
+    """
     # get custom player summary using key and provided user ID
     payload = {
        'key': STEAM_API_KEY,
@@ -65,6 +79,13 @@ def get_avatar(steam_id):
 
 
 def get_friends_list(steam_id):
+    """
+    Get custom friends list using provided steam ID and return
+    the friends list.
+
+    :param steam_id: string steam id
+    :return: list of dictionaries representing friends
+    """
     # get custom friends list using key and provided user ID
     payload = {
        'key': STEAM_API_KEY,
@@ -84,6 +105,13 @@ def get_friends_list(steam_id):
 
 
 def get_game_list(steam_id):
+    """
+    Get custom games list using provided steam ID and return
+    the games list and games count.
+
+    :param steam_id: string steam id
+    :return: list of dictionaries representing games list and string games count
+    """
     # get custom games list using key and provided user ID
     payload = {
         'key': STEAM_API_KEY,
