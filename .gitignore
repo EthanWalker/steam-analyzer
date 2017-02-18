@@ -1,3 +1,11 @@
-.idea/
-__pycache__
-api_cache.sqlite
+.tox/
+*/__pycache__/*
+.cache/
+.idea/*
+.coverage
+*.pyc
+build/
+dist/
+docs/_build/
+*.egg-info
+*.ipynb
