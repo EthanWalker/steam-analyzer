@@ -28,7 +28,7 @@ def make_steam_request(steam_url, endpoint, version, payload):
         response = requests.get(url, params=payload).json()
         return response
     except Exception:
-        raise ValueError('Error: Data not found')
+        raise ValueError('Data not found')
 
 def get_persona(steam_id):
     """
