@@ -24,9 +24,11 @@ def make_steam_request(steam_url, endpoint, version, payload):
     """
 
     url = steam_url.format(endpoint, version)
-    response = requests.get(url, params=payload).json()
-    return response
-
+    try:
+        response = requests.get(url, params=payload).json()
+        return response
+    except Exception:
+        raise ValueError('Error: Data not found')
 
 def get_persona_name(steam_id):
     """
@@ -49,9 +51,14 @@ def get_persona_name(steam_id):
        payload = payload,
     )
     # drill down into player summary JSON and get persona name
-    persona_name = json_response["response"]["players"][0]["personaname"]
-    # return the persona name
-    return persona_name
+    try:
+        persona_name = json_response["response"]["players"][0]["personaname"]
+        # return the persona name
+        return persona_name
+    except IndexError:
+        raise ValueError('Unable to find Persona. Invalid Index.')
+    except KeyError:
+        raise ValueError('Unable to find Persona. Invalid Key.')
 
 def get_avatar(steam_id):
     """
