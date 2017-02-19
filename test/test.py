@@ -34,16 +34,19 @@ def test_avatar_not_present():
         result = get_avatar(12345646546572145)
 
 def test_get_friends():
-    for id in TEST_IDS:
-        assert len(get_friends(id)) != 0
+    tests = zip(TEST_IDS, [287, 211, 160])
+    for id, friends in tests:
+        assert len(get_friends(id)) >= friends
 
 def test_friends_not_present():
     with pytest.raises(ValueError):
         result = get_friends(12345646546572145)
 
 def test_get_games():
-    for id in TEST_IDS:
+    tests = zip(TEST_IDS, [493, 878, 595])
+    for id, games in tests:
         assert get_games(id)["count"] == len(get_games(id)["games"])
+        assert get_games(id)["count"] >= games
 
 def test_games_not_present():
     with pytest.raises(ValueError):
