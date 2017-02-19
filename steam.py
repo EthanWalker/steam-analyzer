@@ -1,10 +1,18 @@
 import json
 import requests
 import requests_cache
+from sys import platform
 
 requests_cache.install_cache('api_cache')
 
-APIPATH = r'C:\api_keys.json'
+
+if platform == "win32":
+    APIPATH = r'C:\api_keys.json'
+elif platform == "darwin":
+    APIPATH = r'/api_keys.json'
+
+
+
 cred = json.load(open(APIPATH))
 STEAM_API_KEY = cred["STEAM_API_KEY"]
 STEAM_USER_URL = "http://api.steampowered.com/ISteamUser/{}/{}/"
