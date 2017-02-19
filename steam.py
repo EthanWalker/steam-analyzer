@@ -30,7 +30,7 @@ def make_steam_request(steam_url, endpoint, version, payload):
     except Exception:
         raise ValueError('Error: Data not found')
 
-def get_persona_name(steam_id):
+def get_persona(steam_id):
     """
     Get custom player summary using provided steam ID and return
     the persona name.
@@ -56,9 +56,9 @@ def get_persona_name(steam_id):
         # return the persona name
         return persona_name
     except IndexError:
-        raise ValueError('Unable to find Persona. Invalid Index.')
+        raise ValueError('Unable to find persona. Invalid Index.')
     except KeyError:
-        raise ValueError('Unable to find Persona. Invalid Key.')
+        raise ValueError('Unable to find persona. Invalid Key.')
 
 def get_avatar(steam_id):
     """
@@ -79,13 +79,18 @@ def get_avatar(steam_id):
        version = VERSION,
        payload = payload,
     )
-    # drill down into player summary JSON and get avatar
-    avatar = json_response["response"]["players"][0]["avatarfull"]
-    # return the avatar
-    return avatar
+    try:
+        # drill down into player summary JSON and get avatar
+        avatar = json_response["response"]["players"][0]["avatarfull"]
+        # return the avatar
+        return avatar
+    except IndexError:
+        raise ValueError('Unable to find avatar. Invalid Index.')
+    except KeyError:
+        raise ValueError('Unable to find avatar. Invalid Key.')
 
 
-def get_friends_list(steam_id):
+def get_friends(steam_id):
     """
     Get custom friends list using provided steam ID and return
     the friends list.
@@ -105,13 +110,18 @@ def get_friends_list(steam_id):
        version = 'v0001',
        payload = payload,
     )
-    # drill down into JSON and get friends list
-    friends_list = json_response["friendslist"]["friends"]
-    # return the friends list
-    return friends_list
+    try:
+        # drill down into JSON and get friends list
+        friends_list = json_response["friendslist"]["friends"]
+        # return the friends list
+        return friends_list
+    except IndexError:
+        raise ValueError('Unable to find friends. Invalid Index.')
+    except KeyError:
+        raise ValueError('Unable to find friends. Invalid Key.')
 
 
-def get_game_list(steam_id):
+def get_games(steam_id):
     """
     Get custom games list using provided steam ID and return
     the games list and games count.
@@ -133,8 +143,13 @@ def get_game_list(steam_id):
         version = 'v0001',
         payload = payload,
     )
-    # drill down into JSON and get games list and count
-    game_list = json_response["response"]["games"]
-    game_count = json_response["response"]["game_count"]
-    # return the games list
-    return {'count': game_count ,'games': game_list}
+    try:
+        # drill down into JSON and get games list and count
+        game_list = json_response["response"]["games"]
+        game_count = json_response["response"]["game_count"]
+        # return the games list
+        return {'count': game_count ,'games': game_list}
+    except IndexError:
+        raise ValueError('Unable to find games. Invalid Index.')
+    except KeyError:
+        raise ValueError('Unable to find games. Invalid Key.')
