@@ -16,8 +16,6 @@ elif platform == "darwin":
     STEAM_API_KEY = cred["STEAM_API_KEY"]
 
 
-
-
 STEAM_USER_URL = "http://api.steampowered.com/ISteamUser/{}/{}/"
 STEAM_PLAYER_URL = "http://api.steampowered.com/IPlayerService/{}/{}/"
 VERSION = 'v0002'
