@@ -8,13 +8,16 @@ requests_cache.install_cache('api_cache')
 
 if platform == "win32":
     APIPATH = r'C:\api_keys.json'
+    cred = json.load(open(APIPATH))
+    STEAM_API_KEY = cred["STEAM_API_KEY"]
 elif platform == "darwin":
     APIPATH = r'/api_keys.json'
+    cred = json.load(open(APIPATH))
+    STEAM_API_KEY = cred["STEAM_API_KEY"]
 
 
 
-cred = json.load(open(APIPATH))
-STEAM_API_KEY = cred["STEAM_API_KEY"]
+
 STEAM_USER_URL = "http://api.steampowered.com/ISteamUser/{}/{}/"
 STEAM_PLAYER_URL = "http://api.steampowered.com/IPlayerService/{}/{}/"
 VERSION = 'v0002'

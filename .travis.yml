@@ -1,16 +1,19 @@
 language: python
 python:
- - "2.6"
- - "2.7"
- - "3.2"
- - "3.3"
- - "3.4"
- - "3.5"
- - "3.6"
- - "nightly"
- - "pypy"
- - "pypy3"
+- '2.6'
+- '2.7'
+- '3.2'
+- '3.3'
+- '3.4'
+- '3.5'
+- '3.6'
+- nightly
+- pypy
+- pypy3
 install:
- - pip install -r requirements.txt
- - python setup.py install
+- pip install -r requirements.txt
+- python setup.py install
 script: py.test --assert=plain
+env:
+  matrix:
+    secure: uBsUJf05rzrb7HY66QgooQilVs8eK2BBaMx3lcxYvwOfYm1Iz4FH6B048gyN0HumN7heEnOL5EkEEDg24gqbdVEdr2A4DhRKxRsuFsP1eG+Ts8a6OrTBqgeDHPYAoamLIg3G+vYVzdw/iYf7PWPbqS/IyYRnIRVUu+1u4BXXdWsSILpfW+QtXJgmPLLgP9dD83XhAsw23xncEkVHO16L+jc7G8KGIcS21ctUGe6Lqo7KG59PmYqwABNsQLDs2Zi7ElT5mkGMlKgYHVjDVAekb4W8OBr+rRX65AwcQmHKLl8V7mq5alMNXO8yB71P7CKQx4QaUzS0g4rKKW2jKTp4tWG5CaR3VGtRgS6OXKUAPLqi6MRa8WZ9r7V71mO9Egw7Z+eGQxFOUqRjkuZgSatCMVlyVZPnCpBJa+iPJKIg8Su7uGyxlZKGn6mY5KawdxQPb2njFvuprBXh6Duoef1izSH6H/GXADm/KWJ6AUQ0slVUtstj28ZJ2FffXJtTvZPsfOQ0waKWaQ1/y8LFDie6Wp5Q4exIPCiiP7m2yrfvessz3EEZowEvHgpQG6m9CpypyZdJkHIrqtuB5eTDbs2VX+VEuBW57Ds+WHGGwh8AG2G891nCtoBiAxd+l3y9nQe2nhtpuSFnSUO3DNzE6HhPoBlLL+LLLWTd0XVshxFD1cg=
