@@ -157,8 +157,11 @@ def get_games(steam_id):
     )
     try:
         # drill down into JSON and get games list and count
-        game_list = json_response["response"]["games"]
-        game_count = json_response["response"]["game_count"]
+        if json_response["response"].get('games') != None:
+            game_list = json_response['response']['games']
+            game_count = json_response['response']['game_count']
+        else:
+            return {'count': 0 ,'games': 0}
         # return the games list
         return {'count': game_count ,'games': game_list}
     except IndexError:
@@ -166,17 +169,21 @@ def get_games(steam_id):
     except KeyError:
         raise ValueError('Unable to find games. Invalid Key.')
 
-'''
-def get_top_game_count(steam_id):
 
+def get_top_game_count(steam_id):
+    '''
+
+    :param steam_id: string steam id
+    :return: tuple of string game top_persona and string top_game_count
+    '''
     friends_list = get_friends(steam_id)
-    top_game_count = 0
-    top_persona = ""
+    top_game_count = get_games(steam_id)['count']
+    top_persona = get_persona(steam_id)
     for friend in friends_list:
         # get player summary
         payload = {
             'key': STEAM_API_KEY,
-            'steamids': friend["steamid"],
+            'steamids': friend['steamid'],
         }
         json_response = make_steam_request(
             steam_url=STEAM_USER_URL,
@@ -184,11 +191,11 @@ def get_top_game_count(steam_id):
             version=VERSION,
             payload=payload,
         )
-        if json_response['response']:
-            game_count = get_games(friend["steamid"])["count"]
+        # check for a valid json response in case profile is private
+        # get game count for current friend and set max between current and top
+        if json_response['response'].get('players') != None:
+            game_count = get_games(friend['steamid'])['count']
             top_game_count = max(game_count, top_game_count)
-            #print(game_count)
             if game_count == top_game_count:
-                top_persona = get_persona(steam_id)
+                top_persona = get_persona(friend['steamid'])
     return (top_persona, top_game_count)
-'''

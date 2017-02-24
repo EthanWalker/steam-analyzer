@@ -3,6 +3,7 @@ from steam import (
     get_friends,
     get_games,
     get_persona,
+    get_top_game_count,
 )
 import pytest
 
@@ -51,3 +52,15 @@ def test_get_games():
 def test_games_not_present():
     with pytest.raises(ValueError):
         result = get_games(12345646546572145)
+
+def test_get_top_game_count():
+    tests = zip(TEST_IDS, ['EricS', 'Sir_Brizz', 'Ζoey'], [4069, 4845, 10115],)
+    for id, persona, game_count in tests:
+        test_data = get_top_game_count(id)
+        assert test_data[0] == persona
+        assert test_data[1] == game_count
+'''
+def test_get_top_game_count_not_present():
+    with pytest.raises(ValueError):
+        result = get_games(12345646546572145)
+'''
