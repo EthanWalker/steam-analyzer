@@ -153,3 +153,30 @@ def get_games(steam_id):
         raise ValueError('Unable to find games. Invalid Index.')
     except KeyError:
         raise ValueError('Unable to find games. Invalid Key.')
+
+'''
+def get_top_game_count(steam_id):
+
+    friends_list = get_friends(steam_id)
+    top_game_count = 0
+    top_persona = ""
+    for friend in friends_list:
+        # get player summary
+        payload = {
+            'key': STEAM_API_KEY,
+            'steamids': friend["steamid"],
+        }
+        json_response = make_steam_request(
+            steam_url=STEAM_USER_URL,
+            endpoint="GetPlayerSummaries",
+            version=VERSION,
+            payload=payload,
+        )
+        if json_response['response']:
+            game_count = get_games(friend["steamid"])["count"]
+            top_game_count = max(game_count, top_game_count)
+            #print(game_count)
+            if game_count == top_game_count:
+                top_persona = get_persona(steam_id)
+    return (top_persona, top_game_count)
+'''
