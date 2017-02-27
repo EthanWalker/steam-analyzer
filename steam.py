@@ -1,4 +1,5 @@
 import json
+from heapq import nlargest
 import requests
 import requests_cache
 from sys import platform
@@ -174,11 +175,10 @@ def get_top_game_count(steam_id):
     '''
 
     :param steam_id: string steam id
-    :return: tuple of string game top_persona and string top_game_count
+    :return: list of tuples with game count and persona of top 5
     '''
     friends_list = get_friends(steam_id)
-    top_game_count = get_games(steam_id)['count']
-    top_persona = get_persona(steam_id)
+    count_list = [(get_games(steam_id)['count'], get_persona(steam_id))]
     for friend in friends_list:
         # get player summary
         payload = {
@@ -194,8 +194,20 @@ def get_top_game_count(steam_id):
         # check for a valid json response in case profile is private
         # get game count for current friend and set max between current and top
         if json_response['response'].get('players') != None:
-            game_count = get_games(friend['steamid'])['count']
-            top_game_count = max(game_count, top_game_count)
-            if game_count == top_game_count:
-                top_persona = get_persona(friend['steamid'])
-    return (top_persona, top_game_count)
+           count_list.append((get_games(friend['steamid'])['count'], get_persona(friend['steamid'])))
+
+    top_five = nlargest(5, count_list)
+    return top_five
+
+def get_top_games(steam_id):
+    '''
+
+    :param steam_id:
+    :return:
+    '''
+    game_list = get_games(steam_id)['games']
+    temp_list = []
+    for game in game_list:
+        temp_list.append((game['playtime_forever'], game['appid']))
+    top_five = nlargest(5, temp_list)
+    return top_five
