@@ -3,7 +3,7 @@ from steam import (
     get_friends,
     get_games,
     get_persona,
-    get_top_game_count,
+    get_top_game_counts,
 get_top_games,
 )
 from flask import Flask, render_template, send_from_directory
@@ -23,7 +23,7 @@ def index(steam_id="76561197960435530"):
         return render_template("404.html")
     username = get_persona(steam_id)
     game_count = get_games(steam_id)["count"]
-    top_game_counts = get_top_game_count(steam_id)
+    top_game_counts = get_top_game_counts(steam_id)
     top_games = get_top_games(steam_id)
     friends_count = len(get_friends(steam_id))
     avatar = get_avatar(steam_id)
