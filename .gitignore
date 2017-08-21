@@ -10,3 +10,4 @@ docs/_build/
 *.egg-info
 *.ipynb
 api_cache.sqlite
+.DS_Store
