@@ -4,6 +4,7 @@ import requests
 import requests_cache
 from sys import platform
 import os
+import pygal
 
 requests_cache.install_cache('api_cache')
 
@@ -207,6 +208,52 @@ def get_top_games(steam_id, n=5):
     game_list = get_games(steam_id)['games']
     temp_list = []
     for game in game_list:
-        temp_list.append((game['playtime_forever'], game['appid']))
+        temp_list.append((round(game['playtime_forever']/60), game['name']))
     top = nlargest(n, temp_list)
     return top
+
+def make_pie_chart(data, title):
+    pie_chart = pygal.Pie()
+    #pie_chart.title = title
+    for item in data:
+        pie_chart.add(item[1],item[0])
+    return pie_chart.render_data_uri()
+
+def make_hbar_chart(data, title):
+    hbar_chart = pygal.HorizontalBar()
+    #hbar_chart.title = title
+    for item in data:
+        hbar_chart.add(item[1],item[0])
+    return hbar_chart.render_data_uri()
+
+def get_playtime(steam_id):
+    payload = {
+        'key': STEAM_API_KEY,
+        'steamid': steam_id,
+        'include_appinfo': 1,
+        'include_played_free_games':1,
+
+    }
+    json_response = make_steam_request(
+        steam_url = STEAM_PLAYER_URL,
+        endpoint = "GetOwnedGames",
+        version = 'v0001',
+        payload = payload,
+    )
+    try:
+        # drill down into JSON and get games list and count
+        if json_response["response"].get('games') != None:
+            playtime_minutes = 0
+            for time in json_response["response"].get('games'):
+                playtime_minutes = playtime_minutes + time['playtime_forever']
+        else:
+            return {'playtime': 0}
+        # return the games list
+        hrs, min = divmod(playtime_minutes, 60)
+        day, hrs = divmod(hrs, 24)
+        pretty_playtime = ("{} Days {} Hours {} Minutes".format(day, hrs, min))
+        return {pretty_playtime}
+    except IndexError:
+        raise ValueError('Unable to find games. Invalid Index.')
+    except KeyError:
+        raise ValueError('Unable to find games. Invalid Key.')

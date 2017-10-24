@@ -1,0 +1,8 @@
+.jumbotron.text-center {
+    background-image: url('/jumbobg.jpg');
+    background-size: cover;
+    color: white;
+}
+h2 {
+    text-align: center;
+}
